@@ -83,11 +83,11 @@ module systolic #(parameter D_W = 8, parameter N = 3, parameter M = 6)(
         end
     endgenerate
 
-    reg init_val = 0;
+    reg init_val;
 
     reg [N-1:0] init [N-1:0];
     reg [2*N-2:0] delay;
-    reg valid_stop = 0;
+    reg valid_stop;
 
     integer diag = N;
     integer x;
@@ -97,6 +97,13 @@ module systolic #(parameter D_W = 8, parameter N = 3, parameter M = 6)(
 
     always@(posedge clk)
     begin
+        
+        if(rst)
+        begin
+            init_val <= 0;
+            valid_stop <= 0;
+        end
+
         delay[0] <= init_val;
 
         for(x = 1; x < 2*N-1; x = x+1)
